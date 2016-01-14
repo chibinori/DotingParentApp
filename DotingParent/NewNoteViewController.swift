@@ -30,7 +30,6 @@ class NewNoteViewController: UIViewController, UIImagePickerControllerDelegate,U
             return
         }
         
-        
         if !UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.PhotoLibrary) {
             let alertController = UIAlertController(title: "警告", message: "Photoライブラリにアクセス出来ません", preferredStyle: .Alert)
             
