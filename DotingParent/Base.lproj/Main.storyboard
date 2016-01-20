@@ -5,7 +5,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
     </dependencies>
     <scenes>
-        <!--Doting Parent View Controller-->
+        <!--Photo List-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="DotingParentViewController" customModule="DotingParent" customModuleProvider="target" sceneMemberID="viewController">
@@ -24,7 +24,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="L1N-zx-yaE">
+                    <navigationItem key="navigationItem" title="Photo List" id="L1N-zx-yaE">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="NAm-jv-2fh">
                             <connections>
                                 <segue destination="eCg-f3-dZb" kind="presentation" id="Jkv-Rq-uRE"/>
@@ -34,11 +34,89 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="tableView" destination="wTn-e7-SLJ" id="Zds-n1-riN"/>
+                        <segue destination="d2j-8p-Wnc" kind="presentation" identifier="toDetailNoteViewController" id="wsB-Sh-Yh4"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="763.5" y="406.5"/>
+        </scene>
+        <!--Detail Note View Controller-->
+        <scene sceneID="eai-xG-VBG">
+            <objects>
+                <viewController id="d2j-8p-Wnc" customClass="DetailNoteViewController" customModule="DotingParent" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="bxE-34-QRe"/>
+                        <viewControllerLayoutGuide type="bottom" id="7Y1-7X-tBD"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="XCH-nL-Rki">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7zt-BN-FWJ">
+                                <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                                <items>
+                                    <navigationItem id="7nt-9Z-dPo">
+                                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="CCd-Ky-QED">
+                                            <connections>
+                                                <action selector="cancel:" destination="d2j-8p-Wnc" id="J8v-QM-D8Y"/>
+                                            </connections>
+                                        </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="79Y-5G-Z5Y">
+                                            <connections>
+                                                <action selector="save:" destination="d2j-8p-Wnc" id="aom-2k-baE"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Title" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="e9m-Dq-Dux">
+                                <rect key="frame" x="0.0" y="64" width="375" height="30"/>
+                                <fontDescription key="fontDescription" name="HiraginoSans-W3" family="Hiragino Sans" pointSize="18"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                <connections>
+                                    <action selector="textFieldReturn:" destination="d2j-8p-Wnc" eventType="editingDidEndOnExit" id="GeR-mU-sgE"/>
+                                </connections>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Comment" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4kH-At-eyQ">
+                                <rect key="frame" x="0.0" y="102" width="375" height="30"/>
+                                <fontDescription key="fontDescription" name="HiraginoSans-W3" family="Hiragino Sans" pointSize="18"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                <connections>
+                                    <action selector="textFieldReturn:" destination="d2j-8p-Wnc" eventType="editingDidEndOnExit" id="sGL-pq-s9A"/>
+                                </connections>
+                            </textField>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9zn-BA-6zT">
+                                <rect key="frame" x="0.0" y="140" width="375" height="368"/>
+                            </imageView>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ztl-D4-Q2j">
+                                <rect key="frame" x="0.0" y="516" width="375" height="151"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="RnY-94-1Ij" appends="YES" id="OKr-Pd-5po"/>
+                        </connections>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <outlet property="imageViewOutlet" destination="9zn-BA-6zT" id="dju-3y-aJF"/>
+                        <outlet property="noteCommentField" destination="4kH-At-eyQ" id="u46-op-1Sy"/>
+                        <outlet property="noteTitleField" destination="e9m-Dq-Dux" id="yW4-Ms-3NE"/>
+                        <outlet property="saveBtnOutlet" destination="79Y-5G-Z5Y" id="Qgx-AI-qfT"/>
+                        <outlet property="tableView" destination="ztl-D4-Q2j" id="t4L-qM-yrZ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="eHd-FF-Vzj" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="RnY-94-1Ij">
+                    <connections>
+                        <action selector="tapScreen:" destination="d2j-8p-Wnc" id="g5d-ed-iK6"/>
+                    </connections>
+                </tapGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="763.5" y="1194.5"/>
         </scene>
         <!--New Note View Controller-->
         <scene sceneID="NgV-12-heS">
@@ -52,10 +130,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="etA-Kb-B3N">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="etA-Kb-B3N">
+                                <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                                 <items>
-                                    <navigationItem title="Title" id="IsK-q1-VUr">
+                                    <navigationItem title="Add Photo" id="IsK-q1-VUr">
                                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="65B-pk-qoe">
                                             <connections>
                                                 <action selector="cancel:" destination="eCg-f3-dZb" id="9mG-D3-Fy0"/>
@@ -69,39 +147,64 @@
                                     </navigationItem>
                                 </items>
                             </navigationBar>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lYY-ol-cMh">
-                                <rect key="frame" x="0.0" y="44" width="375" height="623"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lYY-ol-cMh">
+                                <rect key="frame" x="0.0" y="140" width="375" height="471"/>
                             </imageView>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Title" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4vr-Q8-CdN">
-                                <rect key="frame" x="20" y="491" width="335" height="30"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Comment" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5Oi-Zn-EyU">
-                                <rect key="frame" x="20" y="540" width="335" height="30"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TVG-hO-Q0t">
-                                <rect key="frame" x="170" y="593" width="34" height="30"/>
-                                <state key="normal" title="Save"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Title" textAlignment="center" minimumFontSize="20" translatesAutoresizingMaskIntoConstraints="NO" id="4vr-Q8-CdN">
+                                <rect key="frame" x="0.0" y="64" width="375" height="30"/>
+                                <fontDescription key="fontDescription" name="HiraginoSans-W3" family="Hiragino Sans" pointSize="18"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="done"/>
                                 <connections>
-                                    <action selector="save:" destination="eCg-f3-dZb" eventType="touchUpInside" id="aKA-te-dnm"/>
+                                    <action selector="textFieldReturn:" destination="eCg-f3-dZb" eventType="editingDidEndOnExit" id="4XG-aJ-Sg5"/>
+                                </connections>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Comment" textAlignment="center" minimumFontSize="20" translatesAutoresizingMaskIntoConstraints="NO" id="5Oi-Zn-EyU">
+                                <rect key="frame" x="0.0" y="102" width="375" height="30"/>
+                                <fontDescription key="fontDescription" name="HiraginoSans-W3" family="Hiragino Sans" pointSize="18"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                <connections>
+                                    <action selector="textFieldReturn:" destination="eCg-f3-dZb" eventType="editingDidEndOnExit" id="8oM-MO-OA3"/>
+                                </connections>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0iZ-9R-VgI">
+                                <rect key="frame" x="135" y="614" width="104" height="45"/>
+                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name="HiraginoSans-W3" family="Hiragino Sans" pointSize="19"/>
+                                <state key="normal" title="Select">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="selectImage:" destination="eCg-f3-dZb" eventType="touchUpInside" id="ElL-2e-54W"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="UMg-Fd-ESu" appends="YES" id="PKx-an-YaD"/>
+                        </connections>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
+                        <outlet property="imageSelectBtn" destination="0iZ-9R-VgI" id="hdA-PY-3IK"/>
                         <outlet property="imageViewOutlet" destination="lYY-ol-cMh" id="xyj-Cc-ezL"/>
                         <outlet property="noteCommentField" destination="5Oi-Zn-EyU" id="7pq-uw-Xkj"/>
                         <outlet property="noteTitleField" destination="4vr-Q8-CdN" id="NnQ-Sl-xXB"/>
-                        <outlet property="saveButton" destination="TVG-hO-Q0t" id="mbZ-4H-6Dd"/>
+                        <outlet property="saveBtnOutlet" destination="yD0-BB-hBy" id="9Q4-QV-nTt"/>
                         <outlet property="title" destination="4vr-Q8-CdN" id="rPM-s4-XN5"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dgW-KR-wyO" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="UMg-Fd-ESu">
+                    <connections>
+                        <action selector="tapScreen:" destination="eCg-f3-dZb" id="5iL-rg-BPR"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1215.5" y="406.5"/>
         </scene>

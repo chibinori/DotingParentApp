@@ -14,6 +14,13 @@
 		9A2FD8291C4648010082DB68 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9A2FD8281C4648010082DB68 /* Assets.xcassets */; };
 		9A2FD82C1C4648010082DB68 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9A2FD82A1C4648010082DB68 /* LaunchScreen.storyboard */; };
 		9A2FD8341C4651FB0082DB68 /* NewNoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A2FD8331C4651FB0082DB68 /* NewNoteViewController.swift */; };
+		9A2FD8361C4784A40082DB68 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 9A2FD8351C4784A40082DB68 /* Settings.bundle */; };
+		9A2FD8381C47927E0082DB68 /* ServerUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A2FD8371C47927E0082DB68 /* ServerUtility.swift */; };
+		9ADB225F1C4BC93E0079C592 /* SVIndefiniteAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ADB22581C4BC93E0079C592 /* SVIndefiniteAnimatedView.m */; };
+		9ADB22601C4BC93E0079C592 /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 9ADB225A1C4BC93E0079C592 /* SVProgressHUD.bundle */; };
+		9ADB22611C4BC93E0079C592 /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ADB225C1C4BC93E0079C592 /* SVProgressHUD.m */; };
+		9ADB22621C4BC93E0079C592 /* SVRadialGradientLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ADB225E1C4BC93E0079C592 /* SVRadialGradientLayer.m */; };
+		9ADB22651C4F63410079C592 /* DetailNoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ADB22641C4F63410079C592 /* DetailNoteViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +33,18 @@
 		9A2FD82B1C4648010082DB68 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9A2FD82D1C4648010082DB68 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9A2FD8331C4651FB0082DB68 /* NewNoteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewNoteViewController.swift; sourceTree = "<group>"; };
+		9A2FD8351C4784A40082DB68 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		9A2FD8371C47927E0082DB68 /* ServerUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerUtility.swift; sourceTree = "<group>"; };
+		9ADB22571C4BC93E0079C592 /* SVIndefiniteAnimatedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVIndefiniteAnimatedView.h; sourceTree = "<group>"; };
+		9ADB22581C4BC93E0079C592 /* SVIndefiniteAnimatedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVIndefiniteAnimatedView.m; sourceTree = "<group>"; };
+		9ADB22591C4BC93E0079C592 /* SVProgressHUD-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SVProgressHUD-Prefix.pch"; sourceTree = "<group>"; };
+		9ADB225A1C4BC93E0079C592 /* SVProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SVProgressHUD.bundle; sourceTree = "<group>"; };
+		9ADB225B1C4BC93E0079C592 /* SVProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVProgressHUD.h; sourceTree = "<group>"; };
+		9ADB225C1C4BC93E0079C592 /* SVProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVProgressHUD.m; sourceTree = "<group>"; };
+		9ADB225D1C4BC93E0079C592 /* SVRadialGradientLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVRadialGradientLayer.h; sourceTree = "<group>"; };
+		9ADB225E1C4BC93E0079C592 /* SVRadialGradientLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVRadialGradientLayer.m; sourceTree = "<group>"; };
+		9ADB22631C4BC9C70079C592 /* DotingParent-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DotingParent-Bridging-Header.h"; sourceTree = "<group>"; };
+		9ADB22641C4F63410079C592 /* DetailNoteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailNoteViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -42,6 +61,7 @@
 		9A2FD8121C4648000082DB68 = {
 			isa = PBXGroup;
 			children = (
+				9ADB22631C4BC9C70079C592 /* DotingParent-Bridging-Header.h */,
 				9A2FD81D1C4648000082DB68 /* DotingParent */,
 				9A2FD81C1C4648000082DB68 /* Products */,
 			);
@@ -58,6 +78,7 @@
 		9A2FD81D1C4648000082DB68 /* DotingParent */ = {
 			isa = PBXGroup;
 			children = (
+				9ADB22561C4BC93E0079C592 /* SVProgressHUD */,
 				9A2FD81E1C4648010082DB68 /* AppDelegate.swift */,
 				9A2FD8201C4648010082DB68 /* DotingParentViewController.swift */,
 				9A2FD8221C4648010082DB68 /* Main.storyboard */,
@@ -66,8 +87,26 @@
 				9A2FD82D1C4648010082DB68 /* Info.plist */,
 				9A2FD8251C4648010082DB68 /* DotingParent.xcdatamodeld */,
 				9A2FD8331C4651FB0082DB68 /* NewNoteViewController.swift */,
+				9A2FD8351C4784A40082DB68 /* Settings.bundle */,
+				9A2FD8371C47927E0082DB68 /* ServerUtility.swift */,
+				9ADB22641C4F63410079C592 /* DetailNoteViewController.swift */,
 			);
 			path = DotingParent;
+			sourceTree = "<group>";
+		};
+		9ADB22561C4BC93E0079C592 /* SVProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				9ADB22571C4BC93E0079C592 /* SVIndefiniteAnimatedView.h */,
+				9ADB22581C4BC93E0079C592 /* SVIndefiniteAnimatedView.m */,
+				9ADB22591C4BC93E0079C592 /* SVProgressHUD-Prefix.pch */,
+				9ADB225A1C4BC93E0079C592 /* SVProgressHUD.bundle */,
+				9ADB225B1C4BC93E0079C592 /* SVProgressHUD.h */,
+				9ADB225C1C4BC93E0079C592 /* SVProgressHUD.m */,
+				9ADB225D1C4BC93E0079C592 /* SVRadialGradientLayer.h */,
+				9ADB225E1C4BC93E0079C592 /* SVRadialGradientLayer.m */,
+			);
+			path = SVProgressHUD;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -128,6 +167,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9ADB22601C4BC93E0079C592 /* SVProgressHUD.bundle in Resources */,
+				9A2FD8361C4784A40082DB68 /* Settings.bundle in Resources */,
 				9A2FD82C1C4648010082DB68 /* LaunchScreen.storyboard in Resources */,
 				9A2FD8291C4648010082DB68 /* Assets.xcassets in Resources */,
 				9A2FD8241C4648010082DB68 /* Main.storyboard in Resources */,
@@ -142,9 +183,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				9A2FD8271C4648010082DB68 /* DotingParent.xcdatamodeld in Sources */,
+				9A2FD8381C47927E0082DB68 /* ServerUtility.swift in Sources */,
+				9ADB22651C4F63410079C592 /* DetailNoteViewController.swift in Sources */,
 				9A2FD8341C4651FB0082DB68 /* NewNoteViewController.swift in Sources */,
+				9ADB22621C4BC93E0079C592 /* SVRadialGradientLayer.m in Sources */,
+				9ADB22611C4BC93E0079C592 /* SVProgressHUD.m in Sources */,
 				9A2FD8211C4648010082DB68 /* DotingParentViewController.swift in Sources */,
 				9A2FD81F1C4648010082DB68 /* AppDelegate.swift in Sources */,
+				9ADB225F1C4BC93E0079C592 /* SVIndefiniteAnimatedView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -259,6 +305,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = jp.techacademy.DotingParent;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "DotingParent-Bridging-Header.h";
 			};
 			name = Debug;
 		};
@@ -270,6 +317,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = jp.techacademy.DotingParent;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "DotingParent-Bridging-Header.h";
 			};
 			name = Release;
 		};
@@ -292,6 +340,7 @@
 				9A2FD8321C4648010082DB68 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
