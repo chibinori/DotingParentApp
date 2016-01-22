@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVKit
 
 class DetailNoteViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
@@ -15,6 +16,7 @@ class DetailNoteViewController: UIViewController, UITableViewDataSource, UITable
     @IBOutlet weak var imageViewOutlet: UIImageView!
     
     @IBOutlet weak var saveBtnOutlet: UIBarButtonItem!
+    @IBOutlet weak var movieStartBtnOutlet: UIButton!
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -22,6 +24,8 @@ class DetailNoteViewController: UIViewController, UITableViewDataSource, UITable
 
     var noteInfoUrl: String = ""
     
+    private var imageAVAsset :AVAsset? = nil
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -35,12 +39,19 @@ class DetailNoteViewController: UIViewController, UITableViewDataSource, UITable
         tableView.tableHeaderView = v
         
         tableView.separatorInset = UIEdgeInsetsZero
-        
+        movieStartBtnOutlet.hidden = true
     }
 
     override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
         
-        let url = NSURL(string: self.noteInfoUrl)
+        if self.imageViewOutlet?.image != nil {
+            return
+        }
+    
+        let userId = ServerUtility.getUserId()
+
+        let url = NSURL(string: self.noteInfoUrl + "?user_id=\(userId)")
         let request = NSMutableURLRequest(URL: url!)
         
         request.HTTPMethod = "GET"
@@ -93,10 +104,84 @@ class DetailNoteViewController: UIViewController, UITableViewDataSource, UITable
                 // when error
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                     SVProgressHUD.dismiss()
+                    
+                    let alertController = UIAlertController(title: "警告", message: "画像を取得出来ません", preferredStyle: .Alert)
+                    
+                    let closeAction = UIAlertAction(title: "閉じる", style: .Default) {
+                        action in NSLog("閉じるボタンが押されました")
+                    }
+                    
+                    // addActionした順に左から右にボタンが配置されます
+                    alertController.addAction(closeAction)
+                    
+                    self.presentViewController(alertController, animated: true, completion: nil)
+
                 })
             }
         })
         task.resume()
+
+        let movieUrlStr = self.detailNote["movie_url"] as? String
+        if movieUrlStr == nil {
+            return
+        }
+
+        let movieUrl = NSURL(string: movieUrlStr!)
+        let movieRequest = NSMutableURLRequest(URL: movieUrl!)
+        
+        movieRequest.HTTPMethod = "GET"
+        
+        let movieTask = NSURLSession.sharedSession().dataTaskWithRequest(movieRequest, completionHandler: { (data, response, error) -> Void in
+            
+            let httpURLResponse = response as? NSHTTPURLResponse
+            if (error == nil && httpURLResponse != nil && httpURLResponse?.statusCode == 200) {
+                
+                let tmpPath = NSTemporaryDirectory() + "compressed.mp4"
+                NSLog(tmpPath)
+                let fileManager = NSFileManager.defaultManager()
+                if fileManager.fileExistsAtPath(tmpPath) {
+                    try! fileManager.removeItemAtPath(tmpPath)
+                }
+                
+                data!.writeToFile(tmpPath, atomically: true)
+                
+                let fileUrl = NSURL(fileURLWithPath: tmpPath)
+
+                self.imageAVAsset = AVURLAsset(URL: fileUrl, options: nil)
+                
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    self.movieStartBtnOutlet.hidden = false
+                    
+                    let alertController = UIAlertController(title: "警告", message: "動画を取得出来ません", preferredStyle: .Alert)
+                    
+                    let closeAction = UIAlertAction(title: "閉じる", style: .Default) {
+                        action in NSLog("閉じるボタンが押されました")
+                    }
+                    
+                    // addActionした順に左から右にボタンが配置されます
+                    alertController.addAction(closeAction)
+                    
+                    self.presentViewController(alertController, animated: true, completion: nil)
+
+                })
+            } else {
+                // when error
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    let alertController = UIAlertController(title: "警告", message: "動画を取得出来ません", preferredStyle: .Alert)
+                    
+                    let closeAction = UIAlertAction(title: "閉じる", style: .Default) {
+                        action in NSLog("閉じるボタンが押されました")
+                    }
+                    
+                    // addActionした順に左から右にボタンが配置されます
+                    alertController.addAction(closeAction)
+                    
+                    self.presentViewController(alertController, animated: true, completion: nil)
+
+                })
+            }
+        })
+        movieTask.resume()
 
     }
 
@@ -114,8 +199,10 @@ class DetailNoteViewController: UIViewController, UITableViewDataSource, UITable
         let title: String = (noteTitleField.text != nil && noteTitleField.text != "") ? noteTitleField.text! : "No Title"
         let comment: String = (noteCommentField.text != nil) ? noteCommentField.text! : ""
         
+        let userId = ServerUtility.getUserId()
+
         let param = [
-            "user_id" : "papa",
+            "user_id" : userId,
             "note_title" :  title ,
             "note_comment" : comment
         ]
@@ -142,6 +229,19 @@ class DetailNoteViewController: UIViewController, UITableViewDataSource, UITable
                 // when error
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                     SVProgressHUD.dismiss()
+                    
+                    let alertController = UIAlertController(title: "警告", message: "情報の更新に失敗しました", preferredStyle: .Alert)
+                    
+                    let closeAction = UIAlertAction(title: "閉じる", style: .Default) {
+                        action in NSLog("閉じるボタンが押されました")
+                    }
+                    
+                    // addActionした順に左から右にボタンが配置されます
+                    alertController.addAction(closeAction)
+                    
+                    self.presentViewController(alertController, animated: true, completion: nil)
+
+                    
                     self.dismissViewControllerAnimated(true, completion: nil)
                 })
             }
@@ -149,6 +249,25 @@ class DetailNoteViewController: UIViewController, UITableViewDataSource, UITable
         task.resume()
     }
     
+    @IBAction func movieStart(sender: UIButton) {
+        if self.imageAVAsset == nil {
+            return
+        }
+        
+        // AVPlayerに再生させるアイテムを生成.
+        let playerItem = AVPlayerItem(asset: self.imageAVAsset!)
+        
+        // AVPlayerを生成.
+        let videoPlayer = AVPlayer(playerItem: playerItem)
+        
+        let playerViewController = AVPlayerViewController()
+        playerViewController.player = videoPlayer
+        
+        self.presentViewController(playerViewController, animated: true) {
+            playerViewController.player!.play()
+        }
+
+    }
     
     @IBAction func tapScreen(sender: UITapGestureRecognizer) {
         self.view.endEditing(true)

@@ -10,5 +10,6 @@
 #define DotingParent_Bridging_Header_h
 
 #import "SVProgressHUD.h"
+#import "GMImagePickerController.h"
 
 #endif /* DotingParent_Bridging_Header_h */

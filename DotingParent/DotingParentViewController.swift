@@ -11,6 +11,8 @@ import UIKit
 class DotingParentViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     @IBOutlet weak var tableView: UITableView!
+
+    var notes: Array<Dictionary<String, AnyObject>> = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,13 +33,37 @@ class DotingParentViewController: UIViewController, UITableViewDataSource, UITab
         NSLog("ServerAddress: " + serverAddress)
     }
     
-    var notes: Array<Dictionary<String, AnyObject>> = []
-    
     override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+
+        let reachability = try! Networkability.reachabilityForInternetConnection()
+        
+        reachability.whenReachable = { reachability in
+            if reachability.isReachableViaWiFi() {
+                NSLog("Reachable via WiFi")
+            } else {
+                NSLog("Reachable via Cellular")
+            }
+        }
+        reachability.whenUnreachable = { reachability in
+            let alertController = UIAlertController(title: "警告", message: "ネットワークに接続出来ません", preferredStyle: .Alert)
+            
+            let closeAction = UIAlertAction(title: "閉じる", style: .Default) {
+                action in NSLog("閉じるボタンが押されました")
+            }
+            
+            // addActionした順に左から右にボタンが配置されます
+            alertController.addAction(closeAction)
+            
+            self.presentViewController(alertController, animated: true, completion: nil)
+        }
+        
+        try! reachability.startNotifier()
 
         let serverAddress = ServerUtility.getAddress()
         
-        let url = NSURL(string: serverAddress + "app_notes.json")
+        let userId = ServerUtility.getUserId()
+        let url = NSURL(string: serverAddress + "app_notes.json" + "?user_id=\(userId)")
         let request = NSMutableURLRequest(URL: url!)
         
         request.HTTPMethod = "GET"
@@ -62,6 +88,16 @@ class DotingParentViewController: UIViewController, UITableViewDataSource, UITab
                 self.notes = []
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                     SVProgressHUD.dismiss()
+                    let alertController = UIAlertController(title: "警告", message: "写真を取得出来ません", preferredStyle: .Alert)
+                    
+                    let closeAction = UIAlertAction(title: "閉じる", style: .Default) {
+                        action in NSLog("閉じるボタンが押されました")
+                    }
+                    
+                    // addActionした順に左から右にボタンが配置されます
+                    alertController.addAction(closeAction)
+                    
+                    self.presentViewController(alertController, animated: true, completion: nil)
                 })
             }
         })

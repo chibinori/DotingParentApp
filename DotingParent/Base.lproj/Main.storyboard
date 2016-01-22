@@ -93,6 +93,13 @@
                                 <rect key="frame" x="0.0" y="516" width="375" height="151"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MIu-T0-X72">
+                                <rect key="frame" x="121" y="260" width="133" height="128"/>
+                                <state key="normal" title="movieStart" image="movie_play.png"/>
+                                <connections>
+                                    <action selector="movieStart:" destination="d2j-8p-Wnc" eventType="touchUpInside" id="iPo-MA-EOG"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
@@ -103,6 +110,7 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="imageViewOutlet" destination="9zn-BA-6zT" id="dju-3y-aJF"/>
+                        <outlet property="movieStartBtnOutlet" destination="MIu-T0-X72" id="KeT-C0-Owf"/>
                         <outlet property="noteCommentField" destination="4kH-At-eyQ" id="u46-op-1Sy"/>
                         <outlet property="noteTitleField" destination="e9m-Dq-Dux" id="yW4-Ms-3NE"/>
                         <outlet property="saveBtnOutlet" destination="79Y-5G-Z5Y" id="Qgx-AI-qfT"/>
@@ -166,20 +174,35 @@
                                     <action selector="textFieldReturn:" destination="eCg-f3-dZb" eventType="editingDidEndOnExit" id="8oM-MO-OA3"/>
                                 </connections>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0iZ-9R-VgI">
-                                <rect key="frame" x="135" y="614" width="104" height="45"/>
-                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" name="HiraginoSans-W3" family="Hiragino Sans" pointSize="19"/>
-                                <state key="normal" title="Select">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                        <integer key="value" value="10"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dvl-1c-icd">
+                                <rect key="frame" x="0.0" y="618" width="375" height="49"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="image_image.png" translatesAutoresizingMaskIntoConstraints="NO" id="LhG-Gz-3NC">
+                                        <rect key="frame" x="84" y="12" width="24" height="24"/>
+                                    </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0iZ-9R-VgI">
+                                        <rect key="frame" x="20" y="2" width="335" height="45"/>
+                                        <fontDescription key="fontDescription" name="HiraginoSans-W3" family="Hiragino Sans" pointSize="19"/>
+                                        <state key="normal" title="　　画像または動画を選択">
+                                            <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="10"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="selectImage:" destination="eCg-f3-dZb" eventType="touchUpInside" id="ElL-2e-54W"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="0.90196079015731812" green="0.90196079015731812" blue="0.90196079015731812" alpha="1" colorSpace="calibratedRGB"/>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MWI-sy-QYR">
+                                <rect key="frame" x="121" y="312" width="133" height="128"/>
+                                <state key="normal" title="movieStart" image="movie_play.png"/>
                                 <connections>
-                                    <action selector="selectImage:" destination="eCg-f3-dZb" eventType="touchUpInside" id="ElL-2e-54W"/>
+                                    <action selector="movieStart:" destination="eCg-f3-dZb" eventType="touchUpInside" id="ehu-5Z-LTb"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -193,6 +216,7 @@
                     <connections>
                         <outlet property="imageSelectBtn" destination="0iZ-9R-VgI" id="hdA-PY-3IK"/>
                         <outlet property="imageViewOutlet" destination="lYY-ol-cMh" id="xyj-Cc-ezL"/>
+                        <outlet property="movieStartBtnOutlet" destination="MWI-sy-QYR" id="Vfu-yy-47Y"/>
                         <outlet property="noteCommentField" destination="5Oi-Zn-EyU" id="7pq-uw-Xkj"/>
                         <outlet property="noteTitleField" destination="4vr-Q8-CdN" id="NnQ-Sl-xXB"/>
                         <outlet property="saveBtnOutlet" destination="yD0-BB-hBy" id="9Q4-QV-nTt"/>
@@ -225,4 +249,8 @@
             <point key="canvasLocation" x="139" y="373"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="image_image.png" width="32" height="32"/>
+        <image name="movie_play.png" width="128" height="128"/>
+    </resources>
 </document>
