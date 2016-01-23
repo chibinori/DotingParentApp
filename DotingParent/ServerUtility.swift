@@ -96,4 +96,27 @@ class ServerUtility {
     static func generateBoundaryString() -> String {
         return "Boundary-\(NSUUID().UUIDString)"
     }
+    
+    // 画像をリサイズ
+//    func resize(image: UIImage, max: Int) -> UIImage {
+//        
+//        // 縦横比を固定してリサイズ
+//        
+//        let imageW = image.size.width
+//        let imageH = image.size.height
+//        if Int(imageW) < max && Int(imageH) < max {
+//            return image
+//        }
+//        
+//        let scale = (imageW > imageH ? CGFloat(max) / imageW : CGFloat(max) / imageH);
+//        
+//        let resizedSize: CGSize = CGSizeMake(imageW * scale, imageH * scale)
+//        UIGraphicsBeginImageContext(resizedSize)
+//        image.drawInRect(CGRectMake(0, 0, resizedSize.width, resizedSize.height))
+//        
+//        let resizeImage = UIGraphicsGetImageFromCurrentImageContext()
+//        UIGraphicsEndImageContext()
+//        return resizeImage
+//    }
+
 }

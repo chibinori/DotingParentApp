@@ -108,13 +108,22 @@ class DotingParentViewController: UIViewController, UITableViewDataSource, UITab
         
         return notes.count
     }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 75.0
+    }
 
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
+        let cell: NoteAbstractViewCell = tableView.dequeueReusableCellWithIdentifier("NoteAbstractCell", forIndexPath: indexPath) as! NoteAbstractViewCell
+
+//        let cell = UITableViewCell()
         let note = notes[indexPath.row]
         
-        cell.textLabel!.text = note["title"] as? String
-        cell.textLabel!.font = UIFont(name: "HiraKakuProN-W3", size: 16)
+        cell.titleLabel.text = note["title"] as? String
+        cell.titleLabel.font = UIFont(name: "HiraKakuProN-W3", size: 18)
+        
+        cell.movieImageView.hidden = true
+        let isMovie: Bool = note["is_movie"] as! Bool
         
         let url = NSURL(string: (note["thumbnail"] as? String)!)
         let request = NSMutableURLRequest(URL: url!)
@@ -127,7 +136,10 @@ class DotingParentViewController: UIViewController, UITableViewDataSource, UITab
                 let image = UIImage(data:data!)
                 
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    cell.imageView?.image = image
+                    cell.noteImageView?.image = image
+                    if isMovie {
+                        cell.movieImageView.hidden = false
+                    }
                     cell.layoutSubviews()
                 })
             } else {

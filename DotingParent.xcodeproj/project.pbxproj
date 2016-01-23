@@ -38,6 +38,8 @@
 		9ADB229C1C50CB510079C592 /* GMVideoIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 9ADB228D1C50CB510079C592 /* GMVideoIcon.png */; };
 		9ADB229D1C50CB510079C592 /* GMVideoIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9ADB228E1C50CB510079C592 /* GMVideoIcon@2x.png */; };
 		9ADB22A11C529F590079C592 /* Networkability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ADB22A01C529F590079C592 /* Networkability.swift */; };
+		9ADB22A31C5371E60079C592 /* NoteAbstract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ADB22A21C5371E60079C592 /* NoteAbstract.swift */; };
+		9ADB22A51C53725A0079C592 /* NoteAbstractViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ADB22A41C53725A0079C592 /* NoteAbstractViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -91,6 +93,8 @@
 		9ADB228F1C50CB510079C592 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/GMImagePicker.strings; sourceTree = "<group>"; };
 		9ADB22901C50CB510079C592 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/GMImagePicker.strings; sourceTree = "<group>"; };
 		9ADB22A01C529F590079C592 /* Networkability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Networkability.swift; sourceTree = "<group>"; };
+		9ADB22A21C5371E60079C592 /* NoteAbstract.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteAbstract.swift; sourceTree = "<group>"; };
+		9ADB22A41C53725A0079C592 /* NoteAbstractViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteAbstractViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,6 +135,8 @@
 				9A2FD81E1C4648010082DB68 /* AppDelegate.swift */,
 				9A2FD8201C4648010082DB68 /* DotingParentViewController.swift */,
 				9A2FD8221C4648010082DB68 /* Main.storyboard */,
+				9ADB22A21C5371E60079C592 /* NoteAbstract.swift */,
+				9ADB22A41C53725A0079C592 /* NoteAbstractViewCell.swift */,
 				9A2FD8281C4648010082DB68 /* Assets.xcassets */,
 				9A2FD82A1C4648010082DB68 /* LaunchScreen.storyboard */,
 				9A2FD82D1C4648010082DB68 /* Info.plist */,
@@ -292,12 +298,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				9A2FD8271C4648010082DB68 /* DotingParent.xcdatamodeld in Sources */,
+				9ADB22A51C53725A0079C592 /* NoteAbstractViewCell.swift in Sources */,
 				9A2FD8381C47927E0082DB68 /* ServerUtility.swift in Sources */,
 				9ADB22651C4F63410079C592 /* DetailNoteViewController.swift in Sources */,
 				9A2FD8341C4651FB0082DB68 /* NewNoteViewController.swift in Sources */,
 				9ADB22621C4BC93E0079C592 /* SVRadialGradientLayer.m in Sources */,
 				9ADB22611C4BC93E0079C592 /* SVProgressHUD.m in Sources */,
 				9A2FD8211C4648010082DB68 /* DotingParentViewController.swift in Sources */,
+				9ADB22A31C5371E60079C592 /* NoteAbstract.swift in Sources */,
 				9ADB22991C50CB510079C592 /* GMImagePickerController.m in Sources */,
 				9ADB22A11C529F590079C592 /* Networkability.swift in Sources */,
 				9A2FD81F1C4648010082DB68 /* AppDelegate.swift in Sources */,

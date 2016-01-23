@@ -151,18 +151,6 @@ class DetailNoteViewController: UIViewController, UITableViewDataSource, UITable
                 
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                     self.movieStartBtnOutlet.hidden = false
-                    
-                    let alertController = UIAlertController(title: "警告", message: "動画を取得出来ません", preferredStyle: .Alert)
-                    
-                    let closeAction = UIAlertAction(title: "閉じる", style: .Default) {
-                        action in NSLog("閉じるボタンが押されました")
-                    }
-                    
-                    // addActionした順に左から右にボタンが配置されます
-                    alertController.addAction(closeAction)
-                    
-                    self.presentViewController(alertController, animated: true, completion: nil)
-
                 })
             } else {
                 // when error

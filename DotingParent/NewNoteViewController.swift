@@ -21,17 +21,20 @@ class NewNoteViewController: UIViewController, UINavigationControllerDelegate, G
     
     @IBOutlet weak var saveBtnOutlet: UIBarButtonItem!
     @IBOutlet weak var movieStartBtnOutlet: UIButton!
-    private var isCanceled :Bool = false
+    private var doneSelect :Bool = false
     private var imagePHAsset :PHAsset? = nil
     private var imageAVAsset :AVAsset? = nil
+    private var imageDataArray : Array<NSData> = []
+    
     private let MOVIE_IMAGE_NUM = 3
     private let MOVIE_IMAGE_FILENAME_PREFIX = "movie_image_"
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        isCanceled = false
+        doneSelect = false
         saveBtnOutlet.enabled = false
         movieStartBtnOutlet.hidden = true
     }
@@ -41,8 +44,8 @@ class NewNoteViewController: UIViewController, UINavigationControllerDelegate, G
 
         // viewDidLoadでは写真選択を呼ぶことができない
         
-        // 既に選択済みの場合は何もしない
-        if self.imagePHAsset != nil || isCanceled {
+        // １度でも選択していればの場合は何もしない
+        if doneSelect {
 
             return
         }
@@ -142,47 +145,6 @@ class NewNoteViewController: UIViewController, UINavigationControllerDelegate, G
             SVProgressHUD.setDefaultMaskType(SVProgressHUDMaskType.None)
             SVProgressHUD.showWithStatus("Movie Compressing...")
 
-            let durationSeconds = CMTimeGetSeconds(self.imageAVAsset!.duration)
-            let interval = durationSeconds / Float64(self.MOVIE_IMAGE_NUM - 1)
-            var step: Float64 = 0.0
-            var imageRef: CGImageRef
-            var uiImage: UIImage
-            var imageJpeg: NSData;
-            var imageDataArray : Array<NSData> = []
-            
-            // assetから画像をキャプチャーする為のジュネレーターを生成.
-            let generator = AVAssetImageGenerator(asset: self.imageAVAsset!)
-            generator.maximumSize = CGSize(width: 800, height: 800)
-            generator.appliesPreferredTrackTransform = true
-
-            // 動画の最初のキャプチャを撮る.
-            imageRef = try! generator.copyCGImageAtTime(kCMTimeZero, actualTime: nil)
-            
-            uiImage = UIImage(CGImage: imageRef)
-            imageJpeg = UIImageJPEGRepresentation(uiImage, 0.5)!
-            imageDataArray.append(imageJpeg)
-            
-            // 動画途中のキャプチャを撮る.
-            step = step + interval
-            for var i = 0 ; i < self.MOVIE_IMAGE_NUM - 2 ; i++  {
-                let midpoint = CMTimeMakeWithSeconds(step, 30);
-                
-                imageRef = try! generator.copyCGImageAtTime(midpoint, actualTime: nil)
-                uiImage = UIImage(CGImage: imageRef)
-                imageJpeg = UIImageJPEGRepresentation(uiImage, 0.5)!
-                imageDataArray.append(imageJpeg)
-                
-                step += interval
-            }
-            
-            // 動画の最後のキャプチャを撮る.
-            imageRef = try! generator.copyCGImageAtTime(self.imageAVAsset!.duration, actualTime: nil)
-            uiImage = UIImage(CGImage: imageRef)
-            imageJpeg = UIImageJPEGRepresentation(uiImage, 0.5)!
-            imageDataArray.append(imageJpeg)
-            NSLog("imageAryCount:\(imageDataArray.count)")
-
-            
             //
             // ここから動画の圧縮MP4変換
             //
@@ -200,38 +162,30 @@ class NewNoteViewController: UIViewController, UINavigationControllerDelegate, G
                 switch exportSession!.status {
                 case AVAssetExportSessionStatus.Completed:
                     NSLog("Export completed");
+                    
+                    // 圧縮が完了したので、アップロードの開始
                     let compressedMovieData = NSData(contentsOfURL: exportSession!.outputURL!)
-                    self.uploadMovie(title, comment: comment, movieDataKey: compressedMovieData!, imageDataKeys: imageDataArray)
-                    
-                    
-                    // テスト用に再生してみる
-//                    let avAsset = AVURLAsset(URL: exportSession!.outputURL!, options: nil)
-//                    // AVPlayerに再生させるアイテムを生成.
-//                    let playerItem = AVPlayerItem(asset: avAsset)
-//                    
-//                    // AVPlayerを生成.
-//                    let videoPlayer = AVPlayer(playerItem: playerItem)
-//                    
-//                    let playerViewController = AVPlayerViewController()
-//                    playerViewController.player = videoPlayer
-//                    
-//                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
-//                        self.presentViewController(playerViewController, animated: true) {
-//                            playerViewController.player!.play()
-//                        }
-//                    })
-
+                    self.uploadMovie(title, comment: comment, movieDataKey: compressedMovieData!, imageDataKeys: self.imageDataArray)
                     break
                 case AVAssetExportSessionStatus.Failed:
                     NSLog("Export failed")
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        SVProgressHUD.dismiss()
+                    })
                     break
                 case AVAssetExportSessionStatus.Cancelled:
                     NSLog("Export caceceled")
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        SVProgressHUD.dismiss()
+                    })
                     break
                 default:
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        SVProgressHUD.dismiss()
+                    })
+
                     break
                 }
-                SVProgressHUD.dismiss()
             }
 
 
@@ -247,8 +201,11 @@ class NewNoteViewController: UIViewController, UINavigationControllerDelegate, G
         //
         // 動画のアップロード
         //
-        SVProgressHUD.setDefaultMaskType(SVProgressHUDMaskType.None)
-        SVProgressHUD.showWithStatus("Movie Uploading...")
+        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            SVProgressHUD.dismiss()
+            SVProgressHUD.setDefaultMaskType(SVProgressHUDMaskType.None)
+            SVProgressHUD.showWithStatus("Movie Uploading...")
+        })
 
         let userId = ServerUtility.getUserId()
         let param = [
@@ -420,6 +377,9 @@ class NewNoteViewController: UIViewController, UINavigationControllerDelegate, G
     }
     
     private func raiseImagePicker() {
+
+        self.doneSelect = true
+
         let picker = GMImagePickerController()
         picker.delegate = self;
         picker.allowsMultipleSelection = false
@@ -428,27 +388,6 @@ class NewNoteViewController: UIViewController, UINavigationControllerDelegate, G
 
     }
     
-    // 画像をリサイズ
-    func resize(image: UIImage, max: Int) -> UIImage {
-        
-        // 縦横比を固定してリサイズ
-        
-        let imageW = image.size.width
-        let imageH = image.size.height
-        if Int(imageW) < max && Int(imageH) < max {
-            return image
-        }
-        
-        let scale = (imageW > imageH ? CGFloat(max) / imageW : CGFloat(max) / imageH);
-        
-        let resizedSize: CGSize = CGSizeMake(imageW * scale, imageH * scale)
-        UIGraphicsBeginImageContext(resizedSize)
-        image.drawInRect(CGRectMake(0, 0, resizedSize.width, resizedSize.height))
-        
-        let resizeImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        return resizeImage
-    }
     
     @IBOutlet weak var imageSelectBtn: UIButton!
     
@@ -463,44 +402,89 @@ class NewNoteViewController: UIViewController, UINavigationControllerDelegate, G
         
         self.imagePHAsset = assets[0] as? PHAsset
 
-        let manager: PHImageManager = PHImageManager()
-
-        if self.imagePHAsset?.mediaType == PHAssetMediaType.Video {
-            manager.requestAVAssetForVideo(self.imagePHAsset!, options: nil) {
-                (avAsset:AVAsset?, avAudioMix :AVAudioMix?, assetInfos:[NSObject : AnyObject]?) -> Void in
-                self.imageAVAsset = avAsset
-            }
-            self.movieStartBtnOutlet.hidden = false
-        } else if self.imagePHAsset?.mediaType == PHAssetMediaType.Image {
-            self.movieStartBtnOutlet.hidden = true
-        } else {
-            self.movieStartBtnOutlet.hidden = true
-            return
-        }
+        self.movieStartBtnOutlet.hidden = true
     
+        let manager: PHImageManager = PHImageManager()
+        
         manager.requestImageForAsset(self.imagePHAsset!,
             targetSize: CGSizeMake(1200, 1200),
             contentMode: .AspectFit,
             options: nil) { (image, info) -> Void in
                 // 取得したimageをUIImageViewなどで表示する
-                self.imageViewOutlet.image = image
-                self.saveBtnOutlet.enabled = true
+                
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    self.imageViewOutlet.image = image
+                    if self.imagePHAsset?.mediaType == PHAssetMediaType.Image {
+                        // 画像の時はこの時点でアップロード可能
+                        self.saveBtnOutlet.enabled = true
+                    }
+                })
         }
-    }
-    
-    
-    func assetsPickerControllerDidCancel(picker: GMImagePickerController!) {
-
-        if imageViewOutlet.image != nil {
+        
+        // 以下動画のみの処理
+        if self.imagePHAsset?.mediaType != PHAssetMediaType.Video {
             return
         }
         
-        // 写真が選択されてなければそのまま前の画面に戻る
-        // viewAppearでpickerが開かないようにする
-        isCanceled = true
-        saveBtnOutlet.enabled = false
-        self.dismissViewControllerAnimated(true, completion: nil)
+        manager.requestAVAssetForVideo(self.imagePHAsset!, options: nil) {
+            (avAsset:AVAsset?, avAudioMix :AVAudioMix?, assetInfos:[NSObject : AnyObject]?) -> Void in
+            self.imageAVAsset = avAsset
+
+            self.captureMovieImage()
+            
+            // この時点で動画のアップロードは可能
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                self.movieStartBtnOutlet.hidden = false
+                self.saveBtnOutlet.enabled = true
+            })
+        }
+    
     }
+    
+    
+    private func captureMovieImage() {
+        let durationSeconds = CMTimeGetSeconds(self.imageAVAsset!.duration)
+        let interval = durationSeconds / Float64(self.MOVIE_IMAGE_NUM - 1)
+        var step: Float64 = 0.0
+        var imageRef: CGImageRef
+        var uiImage: UIImage
+        var imageJpeg: NSData;
+        
+        self.imageDataArray = []
+        
+        // assetから画像をキャプチャーする為のジュネレーターを生成.
+        let generator = AVAssetImageGenerator(asset: self.imageAVAsset!)
+        generator.maximumSize = CGSize(width: 800, height: 800)
+        generator.appliesPreferredTrackTransform = true
+        
+        // 動画の最初のキャプチャを撮る.
+        imageRef = try! generator.copyCGImageAtTime(kCMTimeZero, actualTime: nil)
+        
+        uiImage = UIImage(CGImage: imageRef)
+        imageJpeg = UIImageJPEGRepresentation(uiImage, 0.5)!
+        self.imageDataArray.append(imageJpeg)
+        
+        // 動画途中のキャプチャを撮る.
+        step = step + interval
+        for var i = 0 ; i < self.MOVIE_IMAGE_NUM - 2 ; i++  {
+            let midpoint = CMTimeMakeWithSeconds(step, 30);
+            
+            imageRef = try! generator.copyCGImageAtTime(midpoint, actualTime: nil)
+            uiImage = UIImage(CGImage: imageRef)
+            imageJpeg = UIImageJPEGRepresentation(uiImage, 0.5)!
+            self.imageDataArray.append(imageJpeg)
+            
+            step += interval
+        }
+        
+        // 動画の最後のキャプチャを撮る.
+        imageRef = try! generator.copyCGImageAtTime(self.imageAVAsset!.duration, actualTime: nil)
+        uiImage = UIImage(CGImage: imageRef)
+        imageJpeg = UIImageJPEGRepresentation(uiImage, 0.5)!
+        self.imageDataArray.append(imageJpeg)
+        NSLog("imageAryCount:\(self.imageDataArray.count)")
+    }
+    
     
     @IBAction func movieStart(sender: UIButton) {
         if self.imagePHAsset?.mediaType != PHAssetMediaType.Video {
@@ -519,29 +503,6 @@ class NewNoteViewController: UIViewController, UINavigationControllerDelegate, G
         self.presentViewController(playerViewController, animated: true) {
             playerViewController.player!.play()
         }
-        
-        // assetからURLを取得.
-//        let manager: PHImageManager = PHImageManager()
-//        
-//        manager.requestAVAssetForVideo(self.imagePHAsset!, options: nil) {
-//            (avAsset:AVAsset?, avAudioMix :AVAudioMix?, assetInfos:[NSObject : AnyObject]?) -> Void in
-//
-//            
-//            // AVPlayerに再生させるアイテムを生成.
-//            let playerItem = AVPlayerItem(asset: avAsset!)
-//            
-//            // AVPlayerを生成.
-//            let videoPlayer = AVPlayer(playerItem: playerItem)
-//            
-//            let playerViewController = AVPlayerViewController()
-//            playerViewController.player = videoPlayer
-//            
-//            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-//                self.presentViewController(playerViewController, animated: true) {
-//                    playerViewController.player!.play()
-//                }
-//            })
-//        }
     }
     
     
