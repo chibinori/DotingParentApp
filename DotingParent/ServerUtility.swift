@@ -16,8 +16,8 @@ class ServerUtility {
 //        if serverAddress == nil {
 //            serverAddress = "https://techacademy-chibinori-1.c9users.io/"
 //        }
-        serverAddress = "https://techacademy-chibinori-1.c9users.io/"
-        //serverAddress = "https://chibinori-dotingparent.herokuapp.com/"
+//        serverAddress = "https://techacademy-chibinori-1.c9users.io/"
+        serverAddress = "https://chibinori-dotingparent.herokuapp.com/"
         return serverAddress
     }
     
