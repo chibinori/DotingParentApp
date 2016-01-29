@@ -407,7 +407,7 @@ class NewNoteViewController: UIViewController, UINavigationControllerDelegate, G
         let manager: PHImageManager = PHImageManager()
         
         manager.requestImageForAsset(self.imagePHAsset!,
-            targetSize: CGSizeMake(1200, 1200),
+            targetSize: CGSizeMake(800, 800),
             contentMode: .AspectFit,
             options: nil) { (image, info) -> Void in
                 // 取得したimageをUIImageViewなどで表示する

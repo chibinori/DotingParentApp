@@ -40,6 +40,7 @@
 		9ADB22A11C529F590079C592 /* Networkability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ADB22A01C529F590079C592 /* Networkability.swift */; };
 		9ADB22A31C5371E60079C592 /* NoteAbstract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ADB22A21C5371E60079C592 /* NoteAbstract.swift */; };
 		9ADB22A51C53725A0079C592 /* NoteAbstractViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ADB22A41C53725A0079C592 /* NoteAbstractViewCell.swift */; };
+		9ADB22A71C5AEB400079C592 /* DotingParentLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 9ADB22A61C5AEB400079C592 /* DotingParentLogo.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -95,6 +96,7 @@
 		9ADB22A01C529F590079C592 /* Networkability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Networkability.swift; sourceTree = "<group>"; };
 		9ADB22A21C5371E60079C592 /* NoteAbstract.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteAbstract.swift; sourceTree = "<group>"; };
 		9ADB22A41C53725A0079C592 /* NoteAbstractViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteAbstractViewCell.swift; sourceTree = "<group>"; };
+		9ADB22A61C5AEB400079C592 /* DotingParentLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DotingParentLogo.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -167,6 +169,7 @@
 		9ADB226A1C509B3D0079C592 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				9ADB22A61C5AEB400079C592 /* DotingParentLogo.png */,
 				9ADB22711C50B8BB0079C592 /* image_image.png */,
 				9ADB22721C50B8BB0079C592 /* movie_image.png */,
 				9ADB226F1C509D960079C592 /* movie_play.png */,
@@ -276,6 +279,7 @@
 				9ADB229C1C50CB510079C592 /* GMVideoIcon.png in Resources */,
 				9ADB229D1C50CB510079C592 /* GMVideoIcon@2x.png in Resources */,
 				9A2FD8361C4784A40082DB68 /* Settings.bundle in Resources */,
+				9ADB22A71C5AEB400079C592 /* DotingParentLogo.png in Resources */,
 				9ADB22701C509D960079C592 /* movie_play.png in Resources */,
 				9ADB22731C50B8BB0079C592 /* image_image.png in Resources */,
 				9ADB22961C50CB510079C592 /* GMEmptyFolder@2x.png in Resources */,
